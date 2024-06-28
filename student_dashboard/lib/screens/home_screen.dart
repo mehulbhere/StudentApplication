@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:student_dashboard/models/student.dart';
 import 'package:student_dashboard/providers/student_provider.dart';
 import 'package:student_dashboard/screens/acadamic_year.dart';
 
