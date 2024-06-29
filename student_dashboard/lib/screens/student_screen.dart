@@ -20,6 +20,7 @@ class StudentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Student Details"),
+        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
               onPressed: () {

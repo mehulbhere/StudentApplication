@@ -11,11 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => StudentProvider())
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => StudentProvider())],
       child: MaterialApp(
         title: 'Student Dashboard',
+        theme: ThemeData(
+          primaryColor: Colors.blue[100],
+        ),
         home: HomeScreen(),
       ),
     );

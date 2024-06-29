@@ -13,6 +13,7 @@ class ClassScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Classes"),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
         child: studentProvider.getClassesForYear(selectedAcademicYear) == null
@@ -48,6 +49,7 @@ class ClassScreen extends StatelessWidget {
         onPressed: () {
           _showAddClass(context, studentProvider);
         },
+        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
     );

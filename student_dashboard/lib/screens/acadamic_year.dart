@@ -12,6 +12,7 @@ class AcadamicYearScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Academic Year"),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
         child: studentProvider.academicYears.isEmpty
@@ -42,6 +43,7 @@ class AcadamicYearScreen extends StatelessWidget {
         onPressed: () {
           _showAddAcademicYear(context, studentProvider);
         },
+        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
     );
