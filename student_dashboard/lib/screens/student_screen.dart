@@ -74,6 +74,7 @@ class StudentScreen extends StatelessWidget {
             ),
             TextField(
               decoration: InputDecoration(
+                  labelText: "Enter Name: ",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)),
                   hintText: "Enter Name"),
@@ -87,6 +88,7 @@ class StudentScreen extends StatelessWidget {
             TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
+                  labelText: "Enter Fees: ",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)),
                   hintText: "Enter Fees"),
