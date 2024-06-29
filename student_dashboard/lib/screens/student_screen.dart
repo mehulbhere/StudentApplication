@@ -33,6 +33,8 @@ class StudentScreen extends StatelessWidget {
                       fees: fees,
                       academicYear: selectedAcademicYear,
                       className: selectedClass));
+                  final snack = SnackBar(content: Text("New Student Added"));
+                  ScaffoldMessenger.of(context).showSnackBar(snack);
                 }
                 Navigator.pushAndRemoveUntil(
                     context,
@@ -42,27 +44,58 @@ class StudentScreen extends StatelessWidget {
               icon: Icon(Icons.done))
         ],
       ),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextField(
-            decoration: InputDecoration(hintText: "Enter Student Name"),
-            onChanged: (value) {
-              studentName = value;
-            },
-          ),
-          TextField(
-            decoration: InputDecoration(hintText: "Enter Fees"),
-            onChanged: (value) {
-              fees = double.tryParse(value) ?? 0.0;
-            },
-          ),
-          Text(selectedAcademicYear),
-          Text(selectedClass),
-        ],
-      )),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Text(
+                "Academic Year: " + selectedAcademicYear,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Text(
+                "Class: " + selectedClass,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  hintText: "Enter Name"),
+              onChanged: (value) {
+                studentName = value;
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  hintText: "Enter Fees"),
+              onChanged: (value) {
+                fees = double.tryParse(value) ?? 0.0;
+              },
+            ),
+          ],
+        )),
+      ),
     );
   }
 }

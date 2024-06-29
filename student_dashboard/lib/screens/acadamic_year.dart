@@ -11,35 +11,32 @@ class AcadamicYearScreen extends StatelessWidget {
     final studentProvider = Provider.of<StudentProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Academic Year"),
-       
+        title: Text("Select Academic Year"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Academic Year:"),
-            SizedBox(
-              height: 20,
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: studentProvider.academicYears.length,
-              itemBuilder: (context, index) {
-                final year = studentProvider.academicYears[index];
-                return ListTile(
-                  title: Text(year),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context)=> ClassScreen(selectedAcademicYear: year))
-                    );
-                  },
-                );
-              },
-            )
-          ],
-        ),
+        child: studentProvider.academicYears.isEmpty
+            ? Text("No data available. Please add new Academic Year")
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: studentProvider.academicYears.length,
+                    itemBuilder: (context, index) {
+                      final year = studentProvider.academicYears[index];
+                      return ListTile(
+                        title: Text(year),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ClassScreen(selectedAcademicYear: year)));
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -59,6 +56,7 @@ class AcadamicYearScreen extends StatelessWidget {
           return AlertDialog(
             title: Text("Add new year:"),
             content: TextField(
+              keyboardType: TextInputType.number,
               onChanged: (value) {
                 year = value;
               },
@@ -72,7 +70,13 @@ class AcadamicYearScreen extends StatelessWidget {
               TextButton(
                   onPressed: () {
                     if (year.isNotEmpty) {
-                      studentProvider.addAcademicYear(year);
+                      if (studentProvider.academicYears.contains(year)) {
+                        final snack = SnackBar(
+                            content: Text("Academic year already exists."));
+                        ScaffoldMessenger.of(context).showSnackBar(snack);
+                      } else {
+                        studentProvider.addAcademicYear(year);
+                      }
                     }
                     Navigator.of(context).pop();
                   },

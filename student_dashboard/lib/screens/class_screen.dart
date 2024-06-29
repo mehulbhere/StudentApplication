@@ -15,36 +15,34 @@ class ClassScreen extends StatelessWidget {
         title: Text("Classes"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Select Classes for $selectedAcademicYear:"),
-            SizedBox(
-              height: 20,
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: studentProvider
-                      .getClassesForYear(selectedAcademicYear)
-                      ?.length ??
-                  0,
-              itemBuilder: (context, index) {
-                final className = studentProvider
-                    .getClassesForYear(selectedAcademicYear)![index];
-                return ListTile(
-                  title: Text(className),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => StudentScreen(
-                            selectedAcademicYear: selectedAcademicYear,
-                            selectedClass: className)));
-                  },
-                );
-              },
-            )
-          ],
-        ),
+        child: studentProvider.getClassesForYear(selectedAcademicYear) == null
+            ? Text("No data available")
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: studentProvider
+                            .getClassesForYear(selectedAcademicYear)
+                            ?.length ??
+                        0,
+                    itemBuilder: (context, index) {
+                      final className = studentProvider
+                          .getClassesForYear(selectedAcademicYear)![index];
+                      return ListTile(
+                        title: Text(className),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => StudentScreen(
+                                  selectedAcademicYear: selectedAcademicYear,
+                                  selectedClass: className)));
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -76,9 +74,22 @@ class ClassScreen extends StatelessWidget {
               TextButton(
                   onPressed: () {
                     if (newClass.isNotEmpty) {
-                      studentProvider.addClasses(
-                          selectedAcademicYear, newClass);
+                      if (studentProvider
+                                  .getClassesForYear(selectedAcademicYear) !=
+                              null &&
+                          studentProvider
+                              .getClassesForYear(selectedAcademicYear)!
+                              .contains(newClass)) {
+                        final snack =
+                            SnackBar(content: Text("Class already exists."));
+                        ScaffoldMessenger.of(context).showSnackBar(snack);
+                      } else {
+                        studentProvider.addClasses(
+                            selectedAcademicYear, newClass);
+                        print("added" + newClass);
+                      }
                     }
+                    print("addddd");
                     Navigator.of(context).pop();
                   },
                   child: Text("Add"))

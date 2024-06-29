@@ -16,60 +16,64 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: ListView.builder(
-            itemCount: groupedStudents.length,
-            itemBuilder: (context, index) {
-              String academicYear = groupedStudents.keys.elementAt(index);
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Batch: $academicYear",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: groupedStudents[academicYear]!.length,
-                      itemBuilder: (context, index) {
-                        String className = groupedStudents[academicYear]!
-                            .keys
-                            .elementAt(index);
-                        final students =
-                            groupedStudents[academicYear]![className]!;
-                        return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Class: $className",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w400),
-                              ),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: students.length,
-                                  itemBuilder: (context, index) {
-                                    final student = students[index];
-                                    return ListTile(
-                                      title: Text(student.name),
-                                      subtitle: Text(
-                                          "Fees: ${student.fees.toString()}"),
-                                    );
-                                  }),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ]);
-                      }),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              );
-            }),
+        child: groupedStudents.isEmpty
+            ? Center(child: Text("No data available. Please add new Student"))
+            : ListView.builder(
+                itemCount: groupedStudents.length,
+                itemBuilder: (context, index) {
+                  String academicYear = groupedStudents.keys.elementAt(index);
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Batch: $academicYear",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: groupedStudents[academicYear]!.length,
+                          itemBuilder: (context, index) {
+                            String className = groupedStudents[academicYear]!
+                                .keys
+                                .elementAt(index);
+                            final students =
+                                groupedStudents[academicYear]![className]!;
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Class: $className",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: students.length,
+                                      itemBuilder: (context, index) {
+                                        final student = students[index];
+                                        return ListTile(
+                                          title: Text(student.name),
+                                          subtitle: Text(
+                                              "Fees: ${student.fees.toString()}"),
+                                        );
+                                      }),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ]);
+                          }),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
